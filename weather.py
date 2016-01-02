@@ -100,10 +100,6 @@ class weather:
 		offset=time.time()-self.time
 
 		aday=24*60*60
-		#today=self.wdays[int(time.localtime(time.time()).tm_wday)]
-		#tomorrow=self.wdays[time.localtime(time.time()+aday).tm_wday]
-		#tdat=self.wdays[time.localtime(time.time()+2*aday).tm_wday]
-		#tdatdat=self.wdays[time.localtime(time.time()+3*aday).tm_wday]
 
 		if time.localtime().tm_year==time.localtime(self.time).tm_year:
 			if time.localtime().tm_yday==time.localtime(self.time).tm_yday:
@@ -219,8 +215,6 @@ class weather:
 			return 'b'
 		elif cond=='partly cloudy':
 			return 'c'
-		elif cond=='ic':
-			return 'c'
 		elif cond=='broken clouds':
 			return 'd'
 		elif cond=='Clouds':
@@ -229,54 +223,50 @@ class weather:
 			return 'e'
 		elif cond=='overcast clouds':
 			return 'f'
-		elif cond=='LightRainShowers':
+		elif cond=='chance of rain':
+			return 'g'
+		elif cond=='light rain showers':
 			return 'h'
-		elif cond=='hanceOfRain':
-			return 'g'
-		elif cond=='psus':
-			return 'g'
-		elif cond=='ThunderstormAndrain':
-			return 'l'
-		elif cond=='ChanceOfaThunderstorm':
-			return 'k'
-		elif cond=='HeavyThunderstormsAndRain':
-			return 'n'
 		elif cond=='Rain' or cond=='rain':
 			return 'i'
-		elif cond=='light snow':
-			return 'p'
-		elif cond=='mcfl':
-			return 'o'
+		elif cond=='warm rain':
+			return 'j'
+		elif cond=='chance of a thunderstorm':
+			return 'k'
+		elif cond=='thunderstorm and rain':
+			return 'l'
 		elif cond=='Thunderstorm':
 			return 'm'
+		elif cond=='HeavyThunderstormsAndRain':
+			return 'n'
+		elif cond=='chance of snow':
+			return 'o'
+		elif cond=='light snow':
+			return 'p'
+		elif cond=='Snow' or cond=='snow':
+			return 'q'
+		elif cond=='freezing':
+			return 'r'
 		elif cond=='light rain':
 			return 's'
 		elif cond=='moderate rain':
 			return 's'
 		elif cond=='LightDrizzle':
 			return 's'		 
-		elif cond=='i':
-			return 'E'
-		elif cond=='sl':
+		elif cond=='_':
+			return 't'
+		elif cond=='_':
 			return 'u'
-		elif cond=='fr':
-			return 'i'
-		elif cond=='Snow' or cond=='snow':
-			return 'p'
-		elif cond=='snow showers':
+		elif cond=='_':
+			return 'v'
+		elif cond=='_':
+			return 'w'
+		elif cond=='_':
+			return 'x'
+		elif cond=='snow showers' or cond=='light snow showers':
 			return 'y'
-		elif cond=='light snow showers':
-			return 'y'		 
-		elif cond=='w':
-			return '6'
-		elif cond=='ho':
-			return '5'
-		elif cond=='co':
-			return 'E'
-		elif cond=='cl':
-			return 'A'
-		elif cond=='mcl':
-			return 'B'
+		elif cond=='_':
+			return 'z'		 
 		elif cond=='mist':
 			return '9'
 		elif cond=='ShallowFog':
@@ -284,7 +274,7 @@ class weather:
 		elif cond=='Fog' or cond=='fog':
 			return '9'
 		else:
-			return 'z'
+			return '-'
 
 
 
@@ -303,3 +293,5 @@ if __name__=='__main__':
 	w=weather(city=args.LOCATION,storeIpInfo=True)
 	w.load_variables()
 	w.print_conky_string()
+
+
