@@ -1,3 +1,12 @@
+#!/usr/bin/python2.7
+
+
+'''
+INFO:
+-For user with conky just run this file. A conky config snipped will be returned (execute in conky with ${execpi TIMEINTERVAL SCRIPTPATH+NAME})
+-For user of weather data import this file in your own python code, run init and load variables. The weather conditions can be extracted as member variables of the class weather.
+'''
+
 import pycurl
 from StringIO import StringIO
 import json
@@ -6,6 +15,7 @@ import time
 import urllib2
 import os.path
 import numpy as np
+
 
 class weather:
 
@@ -160,7 +170,7 @@ class weather:
 		self.wday = time.localtime().tm_wday
 
 
-	def make_conky_string(self):
+	def make_conky_string(self, debug=False):
 		# self.cond_to_letter()
 
 		config='${color white}' + '\n'
@@ -181,26 +191,26 @@ class weather:
 		config+='${color white}Cloud Coverage: ${color green}${alignr}' + str(self.cloud_coverage) + ' %\n'
 		config+='${color white}Sunrise: ${color green}${alignr}' + str(self.sunrise) + '\n'
 		config+='${color white}Sunset: ${color green}${alignr}' + str(self.sunset) + '\n'
-		config+=self.cond_now + "\n"
-		config+=self.cond_tom_description  + "  " + self.cond_tom  + "\n"
-		config+=self.cond_tdat_description + "  " + self.cond_tdat  + "\n"
-		config+=self.cond_tdatdat_description + "  " + self.cond_tdatdat  + "\n"
+		if debug:
+			config+=self.cond_now + "\n"
+			config+=self.cond_tom_description  + "  " + self.cond_tom  + "\n"
+			config+=self.cond_tdat_description + "  " + self.cond_tdat  + "\n"
+			config+=self.cond_tdatdat_description + "  " + self.cond_tdatdat  + "\n"
 		return config
 
 
-	def make_conky_file(self):
-		with open(".currentweather", 'w') as f:
+	def make_conky_file(self, file_=".currentweather"):
+		with open(file_, 'w') as f:
 			f.write(self.make_conky_string())
 
 
-	def print_conky_string(self):
-		print self.make_conky_string()
+	def print_conky_string(self, debug=False):
+		print self.make_conky_string(debug=False)
 
 
 	#individual extraction (from file)
-	def returnGeneral(self):
+	def returnGeneral(self):#TODO
 		return 3
-
 
 	def returnRAW(self):
 		return self.log
@@ -282,16 +292,19 @@ if __name__=='__main__':
 
 	parser = argparse.ArgumentParser(description='A programm to obtain current weather and the forecast for your current location.')#Change of location is easily possible
 	parser.add_argument('-r', '--refresh', dest="REFRESH", action='store_true', default=False, help='Force data refresh.')
-	parser.add_argument('-nr', '--no-refresh', dest="NOREFRESH", action='store_true', default=False, help='Do not refresh.')
-	parser.add_argument('-rt', '--refreshtime', dest="REFRESHTIME", action='store', type=int, default=180, help='Refresh interval in minutes.')
-	parser.add_argument('-t', '--tempfile', dest="TEMPFILE", action='store', type=str, default='~/.weather.tmp', help='Define the path of the temp file for storage.')
+	parser.add_argument('-rt', '--refreshtime', dest="REFRESHTIME", action='store', type=int, default=30, help='Refresh interval in minutes.')
+	parser.add_argument('-t', '--tempfile', dest="TEMPFILE", action='store', type=str, default=os.path.join(os.path.expanduser('~') , '.weather.tmp'), help='Define the path of the temp file for storage.')
 	parser.add_argument('-l', '--location', dest="LOCATION", action='store', type=str, default=None, help='Fore a different location "city name(.country code)".')
+	parser.add_argument('-d', '--debug', dest="DEBUG", action='store_true', default=False, help='Helps adding additional weather conditions to font/ttf display.')
+	parser.add_argument('-f', '--writeToFile', dest="FILE", action='store', type=str, default=None, help='Stores conky config in file instead of promting it on the commandline.')
 	args = parser.parse_args()
 
 
 
-	w=weather(city=args.LOCATION,storeIpInfo=True)
+	w=weather(city=args.LOCATION, tempFile=args.TEMPFILE, refreshinterval=args.REFRESHTIME, storeIpInfo=True, refresh=args.REFRESH)
 	w.load_variables()
-	w.print_conky_string()
-
+	if args.FILE==None:
+		w.print_conky_string(debug=args.DEBUG)
+	else:
+		w.make_conky_file(file_=args.FILE)
 
