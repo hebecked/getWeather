@@ -205,7 +205,7 @@ class weather:
 
 
 	def print_conky_string(self, debug=False):
-		print self.make_conky_string(debug=False)
+		print self.make_conky_string(debug=debug)
 
 
 	#individual extraction (from file)
