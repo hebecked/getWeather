@@ -164,8 +164,8 @@ class weather:
 		self.dew_point = 243.5*gamma/(17.67-gamma)
 		self.amount_of_rain = self.forecast['list'][self.doffset]['rain'] if 'rain' in self.forecast['list'][self.doffset].keys() else self.forecast['list'][self.doffset]['snow'] if 'snow' in self.forecast['list'][self.doffset].keys() else 0
 		self.visibility = self.currentweather['visibility'] if 'visibility' in self.currentweather.keys() and self.doffset==0 else 'N/A'
-		self.sunrise = str(time.localtime(self.currentweather["sys"]['sunrise']).tm_hour) + ':' + str("%2.f" %time.localtime(self.currentweather["sys"]['sunrise']).tm_min)
-		self.sunset = str(time.localtime(self.currentweather["sys"]['sunset']).tm_hour) + ':' + str("%2.f" %time.localtime(self.currentweather["sys"]['sunset']).tm_min)
+		self.sunrise = str(time.localtime(self.currentweather["sys"]['sunrise']).tm_hour) + ':' + str("%02d" %time.localtime(self.currentweather["sys"]['sunrise']).tm_min)
+		self.sunset = str(time.localtime(self.currentweather["sys"]['sunset']).tm_hour) + ':' + str("%02d" %time.localtime(self.currentweather["sys"]['sunset']).tm_min)
 		self.cloud_coverage = self.currentweather['clouds']['all'] if self.doffset==0 else self.forecast['list'][self.doffset]['clouds']
 		self.wday = time.localtime().tm_wday
 
