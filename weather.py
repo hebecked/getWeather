@@ -213,7 +213,7 @@ class weather:
 			return 'b'
 		elif cond=='scattered clouds':
 			return 'b'
-		elif cond=='partly cloudy':
+		elif cond=='partly cloudy' or cond=='few clouds':
 			return 'c'
 		elif cond=='broken clouds':
 			return 'd'
