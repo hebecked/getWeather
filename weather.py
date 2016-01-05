@@ -281,7 +281,7 @@ class weather:
 			return '9'
 		elif cond=='ShallowFog':
 			return '9'
-		elif cond=='Fog' or cond=='fog':
+		elif cond=='Fog' or cond=='fog' or cond=='haze':
 			return '9'
 		else:
 			return '-'
