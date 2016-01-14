@@ -155,11 +155,11 @@ class weather:
 		self.last_update = time.ctime(self.time) #self.currentweather["dt"])
 		self.humidity = self.currentweather["main"]['humidity'] if self.doffset==0 else self.forecast['list'][self.doffset]['humidity']
 		self.wind_speed = self.currentweather['wind']['speed'] if self.doffset==0 else self.forecast['list'][self.doffset]['speed']
-		if 'deg' in self.currentweather['wind'].keys():
+		if 'deg' in self.currentweather['wind'].keys() or self.doffset!=0:
 			self.wind_dir = self.currentweather['wind']['deg'] if self.doffset==0 else self.forecast['list'][self.doffset]['deg']
 		else:
 			self.wind_dir = 'N/A'
-		self.wind_dira = '' if self.wind_dir == 'N/A' else self.wind_dirs[int(self.wind_dir*16./360.)]
+		self.wind_dira = 'N/A' if self.wind_dir == 'N/A' else self.wind_dirs[int(self.wind_dir*16./360.)]
 		self.pressure = self.currentweather["main"]['pressure'] if self.doffset==0 else self.forecast['list'][self.doffset]['pressure']
 		temp_e = 0.348*(self.humidity*0.06105*np.exp(17.27*self.temp_now/(237.7+self.temp_now)))
 		self.feels_like = self.temp_now + temp_e - 0.7*self.wind_speed #+ 0.7*1350/(self.wind_speed+10) - 4.25 # radiation is solar constant
@@ -238,7 +238,7 @@ class weather:
 			return 'f'
 		elif cond=='chance of rain':
 			return 'g'
-		elif cond=='light rain showers':
+		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='light intensity drizzle rain':
 			return 'h'
 		elif cond=='Rain' or cond=='rain':
 			return 'i'
