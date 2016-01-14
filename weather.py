@@ -1,10 +1,12 @@
 #!/usr/bin/python2.7
-
+# -*- coding: utf-8 -*-
+# A script by Dustin Hebecker
 
 '''
 INFO:
 -For user with conky just run this file. A conky config snipped will be returned (execute in conky with ${execpi TIMEINTERVAL SCRIPTPATH+NAME})
 -For user of weather data import this file in your own python code, run init and load variables. The weather conditions can be extracted as member variables of the class weather.
+-To log the current weather conditions use the flag -log
 '''
 
 import pycurl
@@ -211,6 +213,34 @@ class weather:
 		print self.make_conky_string(debug=debug)
 
 
+	def make_log_string(self):
+		pc_time = time.localtime()
+		pc_month = time.strftime("%b");
+
+		time_str = ( str(pc_time.tm_year) + "-" + str(pc_month) + "-" + str(pc_time.tm_mday).zfill(2) + " " + str(pc_time.tm_hour).zfill(2) + ":" + str(pc_time.tm_min).zfill(2) + ":" + str(pc_time.tm_sec).zfill(2) + " " + time.strftime("%Z", time.localtime()) + ["", "+"][-time.timezone/3600 > 0] + str(-time.timezone/3600) )
+
+		weather_str = (  time_str + "   " + str(-0) + " " + str("%.1f" %self.temp_now) + " " + str("%.1f" %self.dew_point) + " " + str(0) + " " + str("%.1f" %self.humidity) + " " + str(self.wind_speed) +
+					" " + str(self.wind_dir) + " " + str(self.wind_dira) + " " + str(0) + " " + str("%.1f" %self.feels_like) + " " + str(self.amount_of_rain) +
+					" " + str(self.pressure) + "\n")
+
+		return weather_str
+
+
+	def make_log_file(self, file_=os.path.join(os.path.expanduser('~') , 'internet_weather.txt')):
+		if os.path.isfile(file_):
+			with open(file_, 'a') as f:
+				f.write(self.make_log_string())
+		else:
+			legend1 = "#date       time               T_i   T_a  Dewp    H_i  H_a     Wspd   Wdir  Wdir   Gust Chill     Rain   Pressure\n"
+			legend2 = "#                              °C    °C    °C      %    %      m/s      °          m/s    °C       mm        hPa\n"
+			with open(file_, 'w') as f:
+				f.write(legend1+legend2)
+				f.write(self.make_log_string())
+
+
+	def print_log_string(self):
+		print self.make_log_string()
+
 	#individual extraction (from file)
 	def returnGeneral(self):#TODO
 		return 3
@@ -300,14 +330,21 @@ if __name__=='__main__':
 	parser.add_argument('-l', '--location', dest="LOCATION", action='store', type=str, default=None, help='Fore a different location "city name(.country code)".')
 	parser.add_argument('-d', '--debug', dest="DEBUG", action='store_true', default=False, help='Helps adding additional weather conditions to font/ttf display.')
 	parser.add_argument('-f', '--writeToFile', dest="FILE", action='store', type=str, default=None, help='Stores conky config in file instead of promting it on the commandline.')
+	parser.add_argument('-log', '--log', dest="LOG", action='store_true', default=False, help='Returns current weather condition in log format.')
 	args = parser.parse_args()
 
 
 
 	w=weather(city=args.LOCATION, tempFile=args.TEMPFILE, refreshinterval=args.REFRESHTIME, storeIpInfo=True, refresh=args.REFRESH)
 	w.load_variables()
-	if args.FILE==None:
-		w.print_conky_string(debug=args.DEBUG)
+	if args.LOG:
+		if args.FILE==None:
+			w.print_log_string()
+		else:
+			w.make_log_file(file_=args.FILE)
 	else:
-		w.make_conky_file(file_=args.FILE)
+		if args.FILE==None:
+			w.print_conky_string(debug=args.DEBUG)
+		else:
+			w.make_conky_file(file_=args.FILE)
 
