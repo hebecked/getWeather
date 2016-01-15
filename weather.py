@@ -140,8 +140,8 @@ class weather:
 		self.cond_tom = self.forecast['list'][self.doffset + 1]["weather"][0]["main"]
 		self.cond_tdat = self.forecast['list'][self.doffset + 2]["weather"][0]["main"]
 		self.cond_tdatdat = self.forecast['list'][self.doffset + 3]["weather"][0]["main"]
-		
-		self.temp_now = self.currentweather["main"]["temp"] if self.doffset==0 else (self.forecast['list'][self.doffset]["temp"]["min"]+self.forecast['list'][self.doffset]["temp"]["max"])/2.
+
+		self.temp_now = self.currentweather["main"]["temp"] if self.doffset==0 and "temp" in self.currentweather["main"].keys() else (self.forecast['list'][self.doffset]["temp"]["min"]+self.forecast['list'][self.doffset]["temp"]["max"])/2.
 
 		self.temp_m_now = self.forecast['list'][self.doffset]["temp"]["max"]
 		self.temp_m_tom = self.forecast['list'][self.doffset + 1]["temp"]["max"]
