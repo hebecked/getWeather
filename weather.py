@@ -161,7 +161,7 @@ class weather:
 			self.wind_dir = self.currentweather['wind']['deg'] if self.doffset==0 else self.forecast['list'][self.doffset]['deg']
 		else:
 			self.wind_dir = 'N/A'
-		self.wind_dira = 'N/A' if self.wind_dir == 'N/A' else self.wind_dirs[int(self.wind_dir*16./360.)]
+		self.wind_dira = 'N/A' if self.wind_dir == 'N/A' else self.wind_dirs[int((self.wind_dir+45/4)*16./360.-1)]
 		self.pressure = self.currentweather["main"]['pressure'] if self.doffset==0 else self.forecast['list'][self.doffset]['pressure']
 		temp_e = 0.348*(self.humidity*0.06105*np.exp(17.27*self.temp_now/(237.7+self.temp_now)))
 		self.feels_like = self.temp_now + temp_e - 0.7*self.wind_speed #+ 0.7*1350/(self.wind_speed+10) - 4.25 # radiation is solar constant
