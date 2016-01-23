@@ -49,8 +49,9 @@ class weather:
 
 
 	def refresh(self):
-		currentWeatherurl='http://api.openweathermap.org/data/2.5/weather?q='+self.city+'&mode=json&units=metric&appid=2de143494c0b295cca9337e1e96b00e0'	#appid???		
-		forecasturl='http://api.openweathermap.org/data/2.5/forecast/daily?q='+self.city+'&cnt=16&mode=json&units=metric&appid=2de143494c0b295cca9337e1e96b00e0'  #appid???
+		self.apikey='6151f42fb82c1ab87863da29465b594b'
+		currentWeatherurl='http://api.openweathermap.org/data/2.5/weather?q='+self.city+'&mode=json&units=metric&appid='+self.apikey		
+		forecasturl='http://api.openweathermap.org/data/2.5/forecast/daily?q='+self.city+'&cnt=16&mode=json&units=metric&appid='+self.apikey
 
 		currentweather=json.loads(self.curl(currentWeatherurl))
 		forecast=json.loads(self.curl(forecasturl))
