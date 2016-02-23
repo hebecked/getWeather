@@ -251,7 +251,7 @@ class weather:
 
 
 	def cond_to_letter(self, cond):
-		if cond=='sky is clear' or cond=='Clear' or cond=='Sky is Clear':
+		if cond=='sky is clear' or cond=='Clear' or cond=='Sky is Clear'or cond=='clear sky':
 			return 'a'
 		elif cond=='Fair':
 			return 'b'
@@ -269,9 +269,9 @@ class weather:
 			return 'f'
 		elif cond=='chance of rain':
 			return 'g'
-		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='light intensity drizzle rain':
+		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='light intensity drizzle rain' or cond=='light intensity shower rain' or cond=='shower rain':
 			return 'h'
-		elif cond=='Rain' or cond=='rain':
+		elif cond=='Rain' or cond=='rain' or cond=='heavy intensity rain':
 			return 'i'
 		elif cond=='warm rain':
 			return 'j'
