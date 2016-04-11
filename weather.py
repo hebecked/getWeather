@@ -50,9 +50,9 @@ class weather:
 
 	def refresh(self):
 		self.apikey='6151f42fb82c1ab87863da29465b594b'
-		currentWeatherurl='http://api.openweathermap.org/data/2.5/weather?q='+self.city+'&mode=json&units=metric&appid='+self.apikey		
+		currentWeatherurl='http://api.openweathermap.org/data/2.5/weather?q='+self.city+'&mode=json&units=metric&appid='+self.apikey	
 		forecasturl='http://api.openweathermap.org/data/2.5/forecast/daily?q='+self.city+'&cnt=16&mode=json&units=metric&appid='+self.apikey
-
+# City might be mail formated at time, a check should be added
 		currentweather=json.loads(self.curl(currentWeatherurl))
 		forecast=json.loads(self.curl(forecasturl))
 
@@ -67,7 +67,7 @@ class weather:
 		
 	def refreshCity(self,city=None):
 		if city==None:
-			city=self.getCurrentCity()
+			city=self.getCurrentCity() # City might be mail formated at time, a check should be added
 		if city and city!=self.city:
 			self.city=city
 			self.refresh()
@@ -307,7 +307,7 @@ class weather:
 			return 'w'
 		elif cond=='_':
 			return 'x'
-		elif cond=='snow showers' or cond=='light snow showers':
+		elif cond=='snow showers' or cond=='light snow showers' or cond=='light shower snow':
 			return 'y'
 		elif cond=='_':
 			return 'z'		 
