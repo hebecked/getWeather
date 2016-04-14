@@ -80,7 +80,7 @@ class weather:
 		if ipInfo["status"]=="fail":
 			return FALSE
 		else:
-			city=ipInfo['city']+'.'+ipInfo['countryCode']
+			city=ipInfo['city'].split()[0]+'.'+ipInfo['countryCode']
 		return city
 
 	def internet_on(self):
