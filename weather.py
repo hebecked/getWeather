@@ -279,7 +279,7 @@ class weather:
 			return 'k'
 		elif cond=='thunderstorm and rain':
 			return 'l'
-		elif cond=='Thunderstorm':
+		elif cond=='Thunderstorm' or cond=='thunderstorm':
 			return 'm'
 		elif cond=='HeavyThunderstormsAndRain':
 			return 'n'
