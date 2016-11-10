@@ -80,7 +80,8 @@ class weather:
 		if ipInfo["status"]=="fail":
 			return FALSE
 		else:
-			city=ipInfo['city'].split()[0]+'.'+ipInfo['countryCode']
+			self.ipInfo=ipInfo
+			city=ipInfo['city'].replace(" ","%20")+'.'+ipInfo['countryCode']
 		return city
 
 	def internet_on(self):
@@ -202,6 +203,7 @@ class weather:
 			config+=self.cond_tom_description  + "  " + self.cond_tom  + "\n"
 			config+=self.cond_tdat_description + "  " + self.cond_tdat  + "\n"
 			config+=self.cond_tdatdat_description + "  " + self.cond_tdatdat  + "\n"
+			config+=self.ipInfo['city'].replace(" ","%20")+'.'+self.ipInfo['countryCode'] + " " + self.ipInfo['city'] + "\n"
 		return config
 
 
@@ -271,7 +273,7 @@ class weather:
 			return 'g'
 		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='light intensity drizzle rain' or cond=='light intensity shower rain' or cond=='shower rain':
 			return 'h'
-		elif cond=='Rain' or cond=='rain' or cond=='heavy intensity rain':
+		elif cond=='Rain' or cond=='rain' or cond=='heavy intensity rain' or cond=='very heavy rain':
 			return 'i'
 		elif cond=='warm rain':
 			return 'j'
@@ -307,7 +309,7 @@ class weather:
 			return 'w'
 		elif cond=='_':
 			return 'x'
-		elif cond=='snow showers' or cond=='light snow showers' or cond=='light shower snow':
+		elif cond=='snow showers' or cond=='light rain and snow' or cond=='light snow showers' or cond=='light shower snow':
 			return 'y'
 		elif cond=='_':
 			return 'z'		 
