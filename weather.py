@@ -22,11 +22,13 @@ import numpy as np
 class weather:
 
 
-	def __init__(self, city=None, tempFile='.weather.tmp', refreshinterval=30, storeIpInfo=False, refresh=False):
+	def __init__(self, city=None, tempFile='.weather.tmp', refreshinterval=30, storeIpInfo=False, refresh=False, storeIpInfoPath='.location.log'):
 
 		self.wdays=['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 		self.wind_dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW']
 		self.tempFile=tempFile
+		self.storeIpInfo=storeIpInfo
+		self.storeIpInfoPath=storeIpInfoPath
 		if os.path.isfile(tempFile):
 			with open(tempFile, 'r') as f:
 				self.log=json.load(f)
@@ -74,7 +76,7 @@ class weather:
 			return True
 		return False
 
-	def getCurrentCity(self):
+	def getCurrentCity(self, storeIpInfo=False):
 		ipInfo=self.curl('http://ip-api.com/json')
 		ipInfo=json.loads(ipInfo)#sotore in additional file for statistics
 		if ipInfo["status"]=="fail":
@@ -82,6 +84,9 @@ class weather:
 		else:
 			self.ipInfo=ipInfo
 			city=ipInfo['city'].replace(" ","%20")+'.'+ipInfo['countryCode']
+			if self.storeIpInfo:
+				with open(storeIpInfoPath, 'a') as f:
+					f.write(ipInfo)
 		return city
 
 	def internet_on(self):
