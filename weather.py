@@ -85,8 +85,10 @@ class weather:
 			self.ipInfo=ipInfo
 			city=ipInfo['city'].replace(" ","%20")+'.'+ipInfo['countryCode']
 			if self.storeIpInfo:
-				with open(storeIpInfoPath, 'a') as f:
-					f.write(ipInfo)
+				with open(self.storeIpInfoPath, 'a') as f:
+					timeInfo = {'unixtime': str(time.time()), 'systemtime': str(time.ctime())}
+					ipInfo.update(timeInfo)
+					f.write(str(ipInfo) + '\n')
 		return city
 
 	def internet_on(self):
