@@ -278,7 +278,7 @@ class weather:
 			return 'f'
 		elif cond=='chance of rain':
 			return 'g'
-		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='light intensity drizzle rain' or cond=='light intensity shower rain' or cond=='shower rain':
+		elif cond=='light rain showers' or cond=='light intensity drizzle' or cond=='drizzle' or cond=='light intensity drizzle rain' or cond=='light intensity shower rain' or cond=='shower rain':
 			return 'h'
 		elif cond=='Rain' or cond=='rain' or cond=='heavy intensity rain' or cond=='very heavy rain':
 			return 'i'
