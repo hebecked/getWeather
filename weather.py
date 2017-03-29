@@ -103,6 +103,7 @@ class weather:
 	def curl(self, url):
 		buffer = StringIO()
 		c = pycurl.Curl()
+		url = url.encode('utf-8')
 		c.setopt(c.URL, url)
 		c.setopt(c.WRITEDATA, buffer)
 		c.perform()
