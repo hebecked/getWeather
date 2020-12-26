@@ -83,7 +83,7 @@ class weather:
 			return FALSE
 		else:
 			self.ipInfo=ipInfo
-			city=ipInfo['city'].replace(" ","%20")+'.'+ipInfo['countryCode']
+			city=ipInfo['city'].replace(" ","%20")#+'.'+ipInfo['countryCode']
 			if self.storeIpInfo:
 				with open(self.storeIpInfoPath, 'a') as f:
 					timeInfo = {'unixtime': str(time.time()), 'systemtime': str(time.ctime())}
@@ -317,7 +317,7 @@ class weather:
 			return 'w'
 		elif cond=='_':
 			return 'x'
-		elif cond=='snow showers' or cond=='light rain and snow' or cond=='light snow showers' or cond=='light shower snow':
+		elif cond=='snow showers' or cond=='light rain and snow' or cond=='rain and snow' or cond=='light snow showers' or cond=='light shower snow':
 			return 'y'
 		elif cond=='_':
 			return 'z'		 
